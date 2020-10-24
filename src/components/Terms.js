@@ -15,10 +15,7 @@ const Terms = () => {
         eu. Etiam ullamcorper magna id tortor ultricies aliquet. Etiam id
         eleifend magna. Proin consectetur mauris ut risus ullamcorper rhoncus.
         Pellentesque lobortis pellentesque augue. Fusce vel odio ultrices,
-        ornare ante vel, mattis nisi. Curabitur non turpis justo. Suspendisse at
-        lectus nec ipsum fringilla convallis. Duis suscipit sagittis dolor, sed
-        semper orci ultrices at. Fusce sed purus a quam hendrerit consequat.
-        Quisque ultricies vitae mauris in tincidunt.
+        ornare ante vel, mattis nisi.
       </p>
     </Page>
   );
