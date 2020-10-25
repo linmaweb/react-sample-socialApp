@@ -6,6 +6,7 @@ import StateContext from "../context/StateContext";
 import DispatchContext from "../context/DispatchContext";
 import { appInitialState, appReducer } from "../reducers/appReducer";
 import { databaseUrl } from "../config";
+import { LOGOUT, FLASHMESSAGE } from "../reducers/types";
 
 //components
 import Header from "./Header";
@@ -48,15 +49,15 @@ const App = () => {
             token: state.user.token,
           });
           if (!response.data) {
-            dispatch({ type: "logout" });
+            dispatch({ type: LOGOUT });
             dispatch({
-              type: "flashMessage",
+              type: FLASHMESSAGE,
               value: "Your session has expired. Please log in again.",
             });
           }
         } catch (e) {
           dispatch({
-            type: "flashMessage",
+            type: FLASHMESSAGE,
             value: "There was a problem or the request was cancelled.",
           });
         }

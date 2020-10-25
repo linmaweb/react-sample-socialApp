@@ -4,6 +4,11 @@ import DispatchContext from "../context/DispatchContext";
 import { databaseUrl } from "../config";
 import { Link } from "react-router-dom";
 import io from "socket.io-client";
+import {
+  CLOSECHAT,
+  INCREMENTUNREADCHATCOUNT,
+  CLEARUNREADCHATCOUNT,
+} from "../reducers/types";
 
 const socket = io(databaseUrl);
 
@@ -18,7 +23,7 @@ const Chat = () => {
   useEffect(() => {
     if (appState.isChatOpen) {
       chatField.current.focus();
-      appDispatch({ type: "clearUnreadChatCount" });
+      appDispatch({ type: CLEARUNREADCHATCOUNT });
     }
   }, [appState.isChatOpen]);
 
@@ -31,7 +36,7 @@ const Chat = () => {
   useEffect(() => {
     chatLog.current.scrollTop = chatLog.current.scrollHeight;
     if (chatMessages.length && !appState.isChatOpen) {
-      appDispatch({ type: "incrementUnreadChatCount" });
+      appDispatch({ type: INCREMENTUNREADCHATCOUNT });
     }
   }, [chatMessages]);
 
@@ -64,7 +69,7 @@ const Chat = () => {
       <div className="chat-title-bar bg-primary">
         Chat
         <span
-          onClick={() => appDispatch({ type: "closeChat" })}
+          onClick={() => appDispatch({ type: CLOSECHAT })}
           className="chat-title-bar-close"
         >
           <i className="fas fa-times-circle"></i>

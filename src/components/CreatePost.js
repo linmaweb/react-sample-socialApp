@@ -4,6 +4,7 @@ import Axios from "axios";
 import { withRouter } from "react-router-dom";
 import DispatchContext from "../context/DispatchContext";
 import StateContext from "../context/StateContext";
+import { FLASHMESSAGE } from "../reducers/types";
 
 const CreatePost = ({ history }) => {
   const [title, setTitle] = useState();
@@ -21,13 +22,13 @@ const CreatePost = ({ history }) => {
       });
 
       appDispatch({
-        type: "flashMessage",
+        type: FLASHMESSAGE,
         value: "Congrats, you created a new post.",
       });
       history.push(`/post/${response.data}`);
     } catch (e) {
       appDispatch({
-        type: "flashMessage",
+        type: FLASHMESSAGE,
         value: "There was a problem or the request was cancelled.",
       });
     }

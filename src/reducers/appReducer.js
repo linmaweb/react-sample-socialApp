@@ -1,3 +1,15 @@
+import {
+  LOGIN,
+  LOGOUT,
+  FLASHMESSAGE,
+  OPENSEARCH,
+  CLOSESEARCH,
+  TOGGLECHAT,
+  CLOSECHAT,
+  INCREMENTUNREADCHATCOUNT,
+  CLEARUNREADCHATCOUNT,
+} from "./types";
+
 const appInitialState = {
   loggedIn: Boolean(localStorage.getItem("socialAppToken")),
   isSearchOpen: false,
@@ -13,53 +25,62 @@ const appInitialState = {
 
 const appReducer = (state, action) => {
   switch (action.type) {
-    case "login":
+    case LOGIN:
       return {
         ...state,
         loggedIn: true,
         user: action.data,
       };
-    case "logout":
+
+    case LOGOUT:
       return {
         ...state,
         loggedIn: false,
       };
-    case "flashMessage":
+
+    case FLASHMESSAGE:
       return {
         ...state,
         flashMessages: [...state.flashMessages, action.value],
       };
 
-    case "openSearch":
+    case OPENSEARCH:
       return {
         ...state,
         isSearchOpen: true,
       };
-    case "closeSearch":
+
+    case CLOSESEARCH:
       return {
         ...state,
         isSearchOpen: false,
       };
-    case "toggleChat":
+
+    case TOGGLECHAT:
       return {
         ...state,
         isChatOpen: !state.isChatOpen,
       };
-    case "closeChat":
+
+    case CLOSECHAT:
       return {
         ...state,
         isChatOpen: false,
       };
-    case "incrementUnreadChatCount":
+    case INCREMENTUNREADCHATCOUNT:
       return {
         ...state,
         unreadChatCount: state.unreadChatCount + 1,
       };
-    case "clearUnreadChatCount":
+
+    case CLEARUNREADCHATCOUNT:
       return {
         ...state,
         unreadChatCount: 0,
       };
+
+    default:
+      return;
   }
 };
 

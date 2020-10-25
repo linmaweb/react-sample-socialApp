@@ -33,7 +33,11 @@ const ProfileFollow = ({ follow }) => {
               to={`/profile/${follower.username}`}
               className="list-group-item list-group-item-action"
             >
-              <img className="avatar-tiny" src={follower.avatar} />
+              <img
+                className="avatar-tiny"
+                src={follower.avatar}
+                alt="follower"
+              />
               {follower.username}
             </Link>
           );

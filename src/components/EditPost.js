@@ -6,6 +6,18 @@ import LoadingDotsIcon from "./LoadingDotsIcon";
 import { editInitialState, editReducer } from "../reducers/editReducer";
 import StateContext from "../context/StateContext";
 import DispatchContext from "../context/DispatchContext";
+import { FLASHMESSAGE } from "../reducers/types";
+import {
+  FETCHCOMPLETE,
+  TITLECHANGE,
+  BODYCHANGE,
+  SUBMITREQUEST,
+  SAVEREQUESTSTARTED,
+  SAVEREQUESTFINISHED,
+  TITLERULES,
+  BODYRULES,
+  NOTFOUND,
+} from "../reducers/types";
 
 const EditPost = ({ history }) => {
   const appState = useContext(StateContext);
@@ -20,9 +32,9 @@ const EditPost = ({ history }) => {
 
   const submitHandler = (e) => {
     e.preventDefault();
-    dispatch({ type: "titleRules", value: state.title.value });
-    dispatch({ type: "bodyRules", value: state.body.value });
-    dispatch({ type: "submitRequest" });
+    dispatch({ type: TITLERULES, value: state.title.value });
+    dispatch({ type: BODYRULES, value: state.body.value });
+    dispatch({ type: SUBMITREQUEST });
   };
 
   useEffect(() => {
@@ -30,17 +42,17 @@ const EditPost = ({ history }) => {
       try {
         const response = await Axios.get(`/post/${state.id}`);
         if (response.data) {
-          dispatch({ type: "fetchComplete", value: response.data });
-          if (appState.user.username != response.data.author.username) {
-            appDispatch({ type: "flashMessage", value: "permission denied" });
+          dispatch({ type: FETCHCOMPLETE, value: response.data });
+          if (appState.user.username !== response.data.author.username) {
+            appDispatch({ type: FLASHMESSAGE, value: "permission denied" });
             history.push("/");
           }
         } else {
-          dispatch({ type: "notFound" });
+          dispatch({ type: NOTFOUND });
         }
       } catch (e) {
         appDispatch({
-          type: "flashMessage",
+          type: FLASHMESSAGE,
           value: "There was a problem or the request was cancelled.",
         });
       }
@@ -50,7 +62,7 @@ const EditPost = ({ history }) => {
 
   useEffect(() => {
     if (state.sendCount) {
-      dispatch({ type: "saveRequestStarted" });
+      dispatch({ type: SAVEREQUESTSTARTED });
       const fetchPost = async () => {
         try {
           await Axios.post(`/post/${state.id}/edit`, {
@@ -58,12 +70,12 @@ const EditPost = ({ history }) => {
             body: state.body.value,
             token: appState.user.token,
           });
-          dispatch({ type: "saveRequestFinished" });
-          appDispatch({ type: "flashMessage", value: "Post was updated." });
+          dispatch({ type: SAVEREQUESTFINISHED });
+          appDispatch({ type: FLASHMESSAGE, value: "Post was updated." });
           history.push(`/post/${state.id}`);
         } catch (e) {
           appDispatch({
-            type: "flashMessage",
+            type: FLASHMESSAGE,
             value: "There was a problem or the request was cancelled.",
           });
         }
@@ -92,10 +104,10 @@ const EditPost = ({ history }) => {
           </label>
           <input
             onBlur={(e) =>
-              dispatch({ type: "titleRules", value: e.target.value })
+              dispatch({ type: TITLERULES, value: e.target.value })
             }
             onChange={(e) =>
-              dispatch({ type: "titleChange", value: e.target.value })
+              dispatch({ type: TITLECHANGE, value: e.target.value })
             }
             value={state.title.value}
             autoFocus
@@ -118,11 +130,9 @@ const EditPost = ({ history }) => {
             <small>Body Content</small>
           </label>
           <textarea
-            onBlur={(e) =>
-              dispatch({ type: "bodyRules", value: e.target.value })
-            }
+            onBlur={(e) => dispatch({ type: BODYRULES, value: e.target.value })}
             onChange={(e) =>
-              dispatch({ type: "bodyChange", value: e.target.value })
+              dispatch({ type: BODYCHANGE, value: e.target.value })
             }
             name="body"
             id="post-body"

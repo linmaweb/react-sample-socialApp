@@ -1,3 +1,15 @@
+import {
+  FETCHCOMPLETE,
+  TITLECHANGE,
+  BODYCHANGE,
+  SUBMITREQUEST,
+  SAVEREQUESTSTARTED,
+  SAVEREQUESTFINISHED,
+  TITLERULES,
+  BODYRULES,
+  NOTFOUND,
+} from "./types";
+
 const editInitialState = {
   title: {
     value: "",
@@ -17,7 +29,7 @@ const editInitialState = {
 
 const editReducer = (state, action) => {
   switch (action.type) {
-    case "fetchComplete":
+    case FETCHCOMPLETE:
       return {
         ...state,
         title: {
@@ -31,7 +43,7 @@ const editReducer = (state, action) => {
         isFetching: false,
       };
 
-    case "titleChange":
+    case TITLECHANGE:
       return {
         ...state,
         title: {
@@ -41,7 +53,7 @@ const editReducer = (state, action) => {
         },
       };
 
-    case "bodyChange":
+    case BODYCHANGE:
       return {
         ...state,
         body: {
@@ -51,18 +63,19 @@ const editReducer = (state, action) => {
         },
       };
 
-    case "submitRequest":
+    case SUBMITREQUEST:
       if (!state.title.hasErrors && !state.body.hasErrors) {
         return { ...state, sendCount: state.sendCount + 1 };
       }
+      break;
 
-    case "saveRequestStarted":
+    case SAVEREQUESTSTARTED:
       return { ...state, isSaving: true };
 
-    case "saveRequestFinished":
+    case SAVEREQUESTFINISHED:
       return { ...state, isSaving: false };
 
-    case "titleRules":
+    case TITLERULES:
       if (!action.value.trim()) {
         return {
           ...state,
@@ -73,8 +86,9 @@ const editReducer = (state, action) => {
           },
         };
       }
+      break;
 
-    case "bodyRules":
+    case BODYRULES:
       if (!action.value.trim()) {
         return {
           ...state,
@@ -85,8 +99,9 @@ const editReducer = (state, action) => {
           },
         };
       }
+      break;
 
-    case "notFound":
+    case NOTFOUND:
       return {
         ...state,
         notFound: true,

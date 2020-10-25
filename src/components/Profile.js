@@ -96,8 +96,8 @@ const Profile = ({ history }) => {
   const isOwnerFollowing = (follow) => {
     const isOwner =
       appState.loggedIn &&
-      appState.user.username != profileData.profileUsername &&
-      profileData.profileUsername != "...";
+      appState.user.username !== profileData.profileUsername &&
+      profileData.profileUsername !== "...";
 
     if (follow) {
       return isOwner && profileData.isFollowing;
@@ -109,7 +109,11 @@ const Profile = ({ history }) => {
   return (
     <Page title="Profile Screen">
       <h2>
-        <img className="avatar-small" src={profileData.profileAvatar} />
+        <img
+          className="avatar-small"
+          src={profileData.profileAvatar}
+          alt="avatar"
+        />
         {profileData.profileUsername}
         {isOwnerFollowing(false) && (
           <button

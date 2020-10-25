@@ -1,6 +1,7 @@
 import React, { useState, useContext } from "react";
 import Axios from "axios";
 import DispatchContext from "../context/DispatchContext";
+import { LOGIN, FLASHMESSAGE } from "../reducers/types";
 
 const HeaderLoggedOut = () => {
   const appDispatch = useContext(DispatchContext);
@@ -12,20 +13,20 @@ const HeaderLoggedOut = () => {
     try {
       const response = await Axios.post("/login", { username, password });
       if (response.data) {
-        appDispatch({ type: "login", data: response.data });
+        appDispatch({ type: LOGIN, data: response.data });
         appDispatch({
-          type: "flashMessage",
+          type: FLASHMESSAGE,
           value: "You have successfully logged in.",
         });
       } else {
         appDispatch({
-          type: "flashMessage",
+          type: FLASHMESSAGE,
           value: "Invalid username / password.",
         });
       }
     } catch (e) {
       appDispatch({
-        type: "flashMessage",
+        type: FLASHMESSAGE,
         value: "There was a problem or the request was cancelled",
       });
     }

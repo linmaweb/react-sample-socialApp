@@ -3,22 +3,28 @@ import { Link } from "react-router-dom";
 import DispatchContext from "../context/DispatchContext";
 import StateContext from "../context/StateContext";
 import ReactTooltip from "react-tooltip";
+import {
+  LOGOUT,
+  FLASHMESSAGE,
+  OPENSEARCH,
+  TOGGLECHAT,
+} from "../reducers/types";
 
 const HeaderLoggedIn = () => {
   const appDispatch = useContext(DispatchContext);
   const appState = useContext(StateContext);
 
   const handleLogout = () => {
-    appDispatch({ type: "logout" });
+    appDispatch({ type: LOGOUT });
     appDispatch({
-      type: "flashMessage",
+      type: FLASHMESSAGE,
       value: "You have successfully logged out.",
     });
   };
 
   const handleSearchIcon = (e) => {
     e.preventDefault();
-    appDispatch({ type: "openSearch" });
+    appDispatch({ type: OPENSEARCH });
   };
 
   return (
@@ -34,7 +40,7 @@ const HeaderLoggedIn = () => {
       </a>
       <ReactTooltip place="bottom" id="search" className="custom-tooltip" />
       <span
-        onClick={() => appDispatch({ type: "toggleChat" })}
+        onClick={() => appDispatch({ type: TOGGLECHAT })}
         data-for="chat"
         data-tip="Chat"
         className={

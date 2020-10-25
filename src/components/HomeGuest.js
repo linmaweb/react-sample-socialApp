@@ -3,6 +3,7 @@ import Page from "./Page";
 import Axios from "axios";
 import { withRouter } from "react-router-dom";
 import DispatchContext from "../context/DispatchContext";
+import { FLASHMESSAGE } from "../reducers/types";
 
 const HomeGuest = ({ history }) => {
   const [username, setUsername] = useState();
@@ -15,13 +16,13 @@ const HomeGuest = ({ history }) => {
     try {
       await Axios.post("/register", { username, email, password });
       appDispatch({
-        type: "flashMessage",
+        type: FLASHMESSAGE,
         value: "Congrats! Welcome to your new account.",
       });
       history.push(`/profile/${username}`);
     } catch (e) {
       appDispatch({
-        type: "flashMessage",
+        type: FLASHMESSAGE,
         value: "There was a problem or the request was cancelled.",
       });
     }

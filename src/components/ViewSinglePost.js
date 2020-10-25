@@ -8,6 +8,7 @@ import NotFound from "./NotFound";
 import StateContext from "../context/StateContext";
 import DispatchContext from "../context/DispatchContext";
 import { formatPostDate } from "../config";
+import { FLASHMESSAGE } from "../reducers/types";
 
 const ViewSinglePost = ({ history }) => {
   const { id } = useParams();
@@ -24,7 +25,7 @@ const ViewSinglePost = ({ history }) => {
         setIsLoading(false);
       } catch (e) {
         appDispatch({
-          type: "flashMessage",
+          type: FLASHMESSAGE,
           value: "There was a problem or the request was cancelled.",
         });
       }
@@ -61,7 +62,7 @@ const ViewSinglePost = ({ history }) => {
         });
         if (response.data === "Success") {
           appDispatch({
-            type: "flashMessage",
+            type: FLASHMESSAGE,
             value: "Post was successfully deleted.",
           });
 
@@ -69,7 +70,7 @@ const ViewSinglePost = ({ history }) => {
         }
       } catch (e) {
         appDispatch({
-          type: "flashMessage",
+          type: FLASHMESSAGE,
           value: "There was a problem or the request was cancelled.",
         });
       }

@@ -2,6 +2,7 @@ import React, { useState, useEffect, useContext } from "react";
 import DispatchContext from "../context/DispatchContext";
 import Axios from "axios";
 import Post from "./Post";
+import { FLASHMESSAGE, CLOSESEARCH } from "../reducers/types";
 
 const Search = () => {
   const appDispatch = useContext(DispatchContext);
@@ -13,7 +14,7 @@ const Search = () => {
   useEffect(() => {
     const searchKeyPressHandler = (e) => {
       if (e.keyCode === 27) {
-        appDispatch({ type: "closeSearch" });
+        appDispatch({ type: CLOSESEARCH });
       }
     };
     document.addEventListener("keyup", searchKeyPressHandler);
@@ -41,7 +42,7 @@ const Search = () => {
           setShow("results");
         } catch (e) {
           appDispatch({
-            type: "flashMessage",
+            type: FLASHMESSAGE,
             value: "There was a problem or the request was cancelled.",
           });
         }
@@ -67,7 +68,7 @@ const Search = () => {
             placeholder="What are you interested in?"
           />
           <span
-            onClick={() => appDispatch({ type: "closeSearch" })}
+            onClick={() => appDispatch({ type: CLOSESEARCH })}
             className="close-live-search"
           >
             <i className="fas fa-times-circle"></i>
@@ -100,7 +101,7 @@ const Search = () => {
                     <Post
                       post={post}
                       key={post._id}
-                      onClick={() => appDispatch({ type: "closeSearch" })}
+                      onClick={() => appDispatch({ type: CLOSESEARCH })}
                     />
                   );
                 })}
